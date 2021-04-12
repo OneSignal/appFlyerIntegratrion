@@ -25,19 +25,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // promptForPushNotifications will show the native iOS notification permission prompt.
         // We recommend removing the following code and instead using an In-App Message to prompt for notification permission (See step 8)
         OneSignal.promptForPushNotifications(userResponse: { accepted in
-        print("User accepted notifications: \(accepted)")
+            print("User accepted notifications: \(accepted)")
         })
 
-        //        if let deviceState = OneSignal.getDeviceState() {
-        //            let customDataMap: [AnyHashable: Any] = [
-        //              "custom_param_1" : "value_of_param_1"
-        //            ]
-        //            AppsFlyerLib.shared().customData = customDataMap
-        //
-        //            let deviceId = deviceState.userId
-        //            customDataMap.put("onesignalCustomerId", deviceId);
-        //            AppsFlyerLib.setAdditionalData(customData);
-        //        }
+        if let deviceState = OneSignal.getDeviceState() {
+         let deviceId = deviceState.userId
+         let customDataMap: [AnyHashable: Any] = [
+            "onesignalCustomerId" : deviceId ?? ""
+         ]
+         
+         AppsFlyerLib.shared().customData = customDataMap
+        }
 
         AppsFlyerLib.shared().appsFlyerDevKey = "pxcLfDgbcDHRsx6SJTcA7U"
         AppsFlyerLib.shared().appleAppID = "6d79d194-cd16-4a44-9735-c943e5ae81d4"
@@ -74,7 +72,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         print("XXXXXXXXXXX AF 3 XXXXXXXXXX")
         AppsFlyerLib.shared().handlePushNotification(userInfo)
     }
-//    // Open Deeplinks
+    // Open Deeplinks
     // Open URI-scheme for iOS 8 and below
     private func application(_ application: UIApplication, continue userActivity: NSUserActivity, restorationHandler: @escaping ([Any]?) -> Void) -> Bool {
         AppsFlyerLib.shared().continue(userActivity, restorationHandler: restorationHandler)
