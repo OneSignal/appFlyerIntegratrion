@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		484C7B09EB6972D553F3BB8B /* Pods_OneSignalNotificationServiceExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 59AEE4E26A78F43EEE2663D1 /* Pods_OneSignalNotificationServiceExtension.framework */; };
 		4B20E5582602A62A00BF03AF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B20E5572602A62A00BF03AF /* AppDelegate.swift */; };
 		4B20E55A2602A62A00BF03AF /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B20E5592602A62A00BF03AF /* SceneDelegate.swift */; };
 		4B20E55C2602A62A00BF03AF /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B20E55B2602A62A00BF03AF /* ViewController.swift */; };
@@ -16,9 +15,9 @@
 		4B20E5642602A62B00BF03AF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4B20E5622602A62B00BF03AF /* LaunchScreen.storyboard */; };
 		4BF502D5260B92640069375C /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF502D4260B92640069375C /* NotificationService.swift */; };
 		4BF502D9260B92640069375C /* OneSignalNotificationServiceExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 4BF502D2260B92640069375C /* OneSignalNotificationServiceExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-		4BF502E4260B94230069375C /* BuildFile in Frameworks */ = {isa = PBXBuildFile; productRef = 4BF502E3260B94230069375C /* SwiftPackageProductDependency */; };
-		4BF50301260BE1F90069375C /* BuildFile in Frameworks */ = {isa = PBXBuildFile; productRef = 4BF50300260BE1F90069375C /* SwiftPackageProductDependency */; };
-		B511ED9D7301CDD250CC04A2 /* Pods_AppFlyerOneSignal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 40EB30579FB1FD660F2316E3 /* Pods_AppFlyerOneSignal.framework */; };
+		4BF502E4260B94230069375C /* OneSignal in Frameworks */ = {isa = PBXBuildFile; productRef = 4BF502E3260B94230069375C /* OneSignal */; };
+		4BF50301260BE1F90069375C /* AppsFlyerLib in Frameworks */ = {isa = PBXBuildFile; productRef = 4BF50300260BE1F90069375C /* AppsFlyerLib */; };
+		DEA227532624B5CE0092FF58 /* OneSignal in Frameworks */ = {isa = PBXBuildFile; productRef = DEA227522624B5CE0092FF58 /* OneSignal */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -72,9 +71,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4BF502E4260B94230069375C /* BuildFile in Frameworks */,
-				4BF50301260BE1F90069375C /* BuildFile in Frameworks */,
-				B511ED9D7301CDD250CC04A2 /* Pods_AppFlyerOneSignal.framework in Frameworks */,
+				4BF502E4260B94230069375C /* OneSignal in Frameworks */,
+				4BF50301260BE1F90069375C /* AppsFlyerLib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -82,7 +80,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				484C7B09EB6972D553F3BB8B /* Pods_OneSignalNotificationServiceExtension.framework in Frameworks */,
+				DEA227532624B5CE0092FF58 /* OneSignal in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -142,7 +140,6 @@
 				5472FC0C2EB87498728EDE50 /* Pods-OneSignalNotificationServiceExtension.debug.xcconfig */,
 				A1176AAF521017E1F3856A49 /* Pods-OneSignalNotificationServiceExtension.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -175,8 +172,8 @@
 			);
 			name = AppFlyerOneSignal;
 			packageProductDependencies = (
-				4BF502E3260B94230069375C /* SwiftPackageProductDependency */,
-				4BF50300260BE1F90069375C /* SwiftPackageProductDependency */,
+				4BF502E3260B94230069375C /* OneSignal */,
+				4BF50300260BE1F90069375C /* AppsFlyerLib */,
 			);
 			productName = AppFlyerOneSignal;
 			productReference = 4B20E5542602A62A00BF03AF /* AppFlyerOneSignal.app */;
@@ -196,6 +193,9 @@
 			dependencies = (
 			);
 			name = OneSignalNotificationServiceExtension;
+			packageProductDependencies = (
+				DEA227522624B5CE0092FF58 /* OneSignal */,
+			);
 			productName = OneSignalNotificationServiceExtension;
 			productReference = 4BF502D2260B92640069375C /* OneSignalNotificationServiceExtension.appex */;
 			productType = "com.apple.product-type.app-extension";
@@ -227,8 +227,8 @@
 			);
 			mainGroup = 4B20E54B2602A62A00BF03AF;
 			packageReferences = (
-				4BF502E2260B94230069375C /* RemoteSwiftPackageReference */,
-				4BF502FF260BE1F90069375C /* RemoteSwiftPackageReference */,
+				4BF502E2260B94230069375C /* XCRemoteSwiftPackageReference "OneSignal-XCFramework" */,
+				4BF502FF260BE1F90069375C /* XCRemoteSwiftPackageReference "AppsFlyerFramework" */,
 			);
 			productRefGroup = 4B20E5552602A62A00BF03AF /* Products */;
 			projectDirPath = "";
@@ -407,7 +407,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -462,7 +462,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -593,7 +593,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		4BF502E2260B94230069375C /* RemoteSwiftPackageReference */ = {
+		4BF502E2260B94230069375C /* XCRemoteSwiftPackageReference "OneSignal-XCFramework" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/OneSignal/OneSignal-XCFramework";
 			requirement = {
@@ -601,7 +601,7 @@
 				minimumVersion = 3.3.0;
 			};
 		};
-		4BF502FF260BE1F90069375C /* RemoteSwiftPackageReference */ = {
+		4BF502FF260BE1F90069375C /* XCRemoteSwiftPackageReference "AppsFlyerFramework" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/AppsFlyerSDK/AppsFlyerFramework";
 			requirement = {
@@ -612,15 +612,20 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		4BF502E3260B94230069375C /* SwiftPackageProductDependency */ = {
+		4BF502E3260B94230069375C /* OneSignal */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 4BF502E2260B94230069375C /* RemoteSwiftPackageReference */;
+			package = 4BF502E2260B94230069375C /* XCRemoteSwiftPackageReference "OneSignal-XCFramework" */;
 			productName = OneSignal;
 		};
-		4BF50300260BE1F90069375C /* SwiftPackageProductDependency */ = {
+		4BF50300260BE1F90069375C /* AppsFlyerLib */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 4BF502FF260BE1F90069375C /* RemoteSwiftPackageReference */;
+			package = 4BF502FF260BE1F90069375C /* XCRemoteSwiftPackageReference "AppsFlyerFramework" */;
 			productName = AppsFlyerLib;
+		};
+		DEA227522624B5CE0092FF58 /* OneSignal */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 4BF502E2260B94230069375C /* XCRemoteSwiftPackageReference "OneSignal-XCFramework" */;
+			productName = OneSignal;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
