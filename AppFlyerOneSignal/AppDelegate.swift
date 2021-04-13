@@ -25,9 +25,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         // promptForPushNotifications will show the native iOS notification permission prompt.
         // We recommend removing the following code and instead using an In-App Message to prompt for notification permission (See step 8)
         OneSignal.promptForPushNotifications(userResponse: { accepted in
-        print("User accepted notifications: \(accepted)")
+            print("User accepted notifications: \(accepted)")
         })
 
+        // AppFlyer CODE
         if let deviceState = OneSignal.getDeviceState() {
          let deviceId = deviceState.userId
          let customDataMap: [AnyHashable: Any] = [
@@ -42,37 +43,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         AppsFlyerLib.shared().delegate = self
         AppsFlyerLib.shared().isDebug = true
 
-        // iOS 10 or later
-        if #available(iOS 10, *) {
-            UNUserNotificationCenter.current().requestAuthorization(options: [.badge, .alert, .sound]) { _, _ in }
-            application.registerForRemoteNotifications()
-        }
-        // iOS 9 support - Given for reference. This demo app supports iOS 13 and above
-        else {
-            application.registerUserNotificationSettings(UIUserNotificationSettings(types: [.badge, .sound, .alert], categories: nil))
-            application.registerForRemoteNotifications()
-        }
-
-        print("XXXXXXXXXXX AF 1 XXXXXXXXXX")
-
         return true
     }
     
     
     func applicationDidBecomeActive(_ application: UIApplication) {
         // Start the SDK (start the IDFA timeout set above, for iOS 14 or later)
-        AppsFlyerLib.shared().start()
-        print("XXXXXXXXXXX AF 2 XXXXXXXXXX")
     }
     // Open Univerasal Links
     // For Swift version < 4.2 replace function signature with the commented out code:
     // func application(_ application: UIApplication, continue userActivity: NSUserActivity, restorationHandler: @escaping ([Any]?) -> Void) -> Bool {
     func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any]) {
-        print(" user info \(userInfo)")
-        print("XXXXXXXXXXX AF 3 XXXXXXXXXX")
         AppsFlyerLib.shared().handlePushNotification(userInfo)
     }
-//    // Open Deeplinks
+    // Open Deeplinks
     // Open URI-scheme for iOS 8 and below
     private func application(_ application: UIApplication, continue userActivity: NSUserActivity, restorationHandler: @escaping ([Any]?) -> Void) -> Bool {
         AppsFlyerLib.shared().continue(userActivity, restorationHandler: restorationHandler)
@@ -96,17 +80,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         AppsFlyerLib.shared().continue(userActivity, restorationHandler: nil)
         return true
     }
-
-    func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
-        print("ECM: did receive response")
-    }
-
-    func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
-        print("ECM: will present notification")
-        
-        AppsFlyerLib.shared().start()
-    }
-    
 }
 //MARK: AppsFlyerLibDelegate
 extension AppDelegate: AppsFlyerLibDelegate{
