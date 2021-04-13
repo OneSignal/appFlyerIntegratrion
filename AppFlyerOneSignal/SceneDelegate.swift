@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import OneSignal
 import AppsFlyerLib
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {

@@ -3,15 +3,13 @@ import OneSignal
 import AppsFlyerLib
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate, OSSubscriptionObserver {
+    
     var window: UIWindow?
     let defaults = UserDefaults.standard
   
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions:
-    [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-    
-        UNUserNotificationCenter.current().delegate = self
-        
+    [UIApplication.LaunchOptionsKey: Any]?) -> Bool {        
       
         // Remove this method to stop OneSignal Debugging
         OneSignal.setLogLevel(.LL_VERBOSE, visualLevel: .LL_NONE)
@@ -27,29 +25,34 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         OneSignal.promptForPushNotifications(userResponse: { accepted in
             print("User accepted notifications: \(accepted)")
         })
+        
+        OneSignal.add(self)
 
-        // AppFlyer CODE
-        if let deviceState = OneSignal.getDeviceState() {
-         let deviceId = deviceState.userId
-         let customDataMap: [AnyHashable: Any] = [
-         "onesignalCustomerId" : deviceId
-         ]
-         
-         AppsFlyerLib.shared().customData = customDataMap
-        }
-
+        AppsFlyerLib.shared().start()
         AppsFlyerLib.shared().appsFlyerDevKey = "pxcLfDgbcDHRsx6SJTcA7U"
-        AppsFlyerLib.shared().appleAppID = "6d79d194-cd16-4a44-9735-c943e5ae81d4"
+        AppsFlyerLib.shared().appleAppID = "1559782522"
         AppsFlyerLib.shared().delegate = self
         AppsFlyerLib.shared().isDebug = true
 
         return true
     }
     
+    func onOSSubscriptionChanged(_ stateChanges: OSSubscriptionStateChanges) {
+        // What happends if the userId becomes nil
+        if let deviceState = OneSignal.getDeviceState() {
+            if let deviceId = deviceState.userId {
+                let customDataMap: [AnyHashable: Any] = [
+                    "onesignalCustomerId" : deviceId
+                ]
+                AppsFlyerLib.shared().customData = customDataMap
+            }
+        }
+    }
     
     func applicationDidBecomeActive(_ application: UIApplication) {
         // Start the SDK (start the IDFA timeout set above, for iOS 14 or later)
     }
+
     // Open Univerasal Links
     // For Swift version < 4.2 replace function signature with the commented out code:
     // func application(_ application: UIApplication, continue userActivity: NSUserActivity, restorationHandler: @escaping ([Any]?) -> Void) -> Bool {
