@@ -3,14 +3,14 @@ import OneSignal
 import AppsFlyerLib
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate {
     var window: UIWindow?
     let defaults = UserDefaults.standard
   
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions:
     [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
     
-        //UNUserNotificationCenter.current().delegate = self
+        UNUserNotificationCenter.current().delegate = self
         
       
         // Remove this method to stop OneSignal Debugging
@@ -25,13 +25,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // promptForPushNotifications will show the native iOS notification permission prompt.
         // We recommend removing the following code and instead using an In-App Message to prompt for notification permission (See step 8)
         OneSignal.promptForPushNotifications(userResponse: { accepted in
-            print("User accepted notifications: \(accepted)")
+        print("User accepted notifications: \(accepted)")
         })
 
         if let deviceState = OneSignal.getDeviceState() {
          let deviceId = deviceState.userId
          let customDataMap: [AnyHashable: Any] = [
-            "onesignalCustomerId" : deviceId ?? ""
+         "onesignalCustomerId" : deviceId
          ]
          
          AppsFlyerLib.shared().customData = customDataMap
@@ -72,7 +72,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         print("XXXXXXXXXXX AF 3 XXXXXXXXXX")
         AppsFlyerLib.shared().handlePushNotification(userInfo)
     }
-    // Open Deeplinks
+//    // Open Deeplinks
     // Open URI-scheme for iOS 8 and below
     private func application(_ application: UIApplication, continue userActivity: NSUserActivity, restorationHandler: @escaping ([Any]?) -> Void) -> Bool {
         AppsFlyerLib.shared().continue(userActivity, restorationHandler: restorationHandler)
@@ -96,14 +96,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         AppsFlyerLib.shared().continue(userActivity, restorationHandler: nil)
         return true
     }
-//
-//    func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
-//        print("ECM: did receive response")
-//    }
-//
-//    func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
-//        print("ECM: will present notification")
-//    }
+
+    func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
+        print("ECM: did receive response")
+    }
+
+    func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+        print("ECM: will present notification")
+        
+        AppsFlyerLib.shared().start()
+    }
     
 }
 //MARK: AppsFlyerLibDelegate
