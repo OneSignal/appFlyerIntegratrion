@@ -3,7 +3,8 @@ import OneSignal
 import AppsFlyerLib
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate, OSSubscriptionObserver {
+    
     var window: UIWindow?
     let defaults = UserDefaults.standard
   
@@ -27,16 +28,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         OneSignal.promptForPushNotifications(userResponse: { accepted in
             print("User accepted notifications: \(accepted)")
         })
+        
+        OneSignal.add(self)
 
-        if let deviceState = OneSignal.getDeviceState() {
-         let deviceId = deviceState.userId
-         let customDataMap: [AnyHashable: Any] = [
-            "onesignalCustomerId" : deviceId ?? ""
-         ]
-         
-         AppsFlyerLib.shared().customData = customDataMap
-        }
-
+        AppsFlyerLib.shared().start()
         AppsFlyerLib.shared().appsFlyerDevKey = "pxcLfDgbcDHRsx6SJTcA7U"
         AppsFlyerLib.shared().appleAppID = "6d79d194-cd16-4a44-9735-c943e5ae81d4"
         AppsFlyerLib.shared().delegate = self
@@ -58,12 +53,23 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return true
     }
     
+    func onOSSubscriptionChanged(_ stateChanges: OSSubscriptionStateChanges) {
+        if let deviceState = OneSignal.getDeviceState() {
+            if let deviceId = deviceState.userId {
+                let customDataMap: [AnyHashable: Any] = [
+                    "onesignalCustomerId" : deviceId
+                ]
+                AppsFlyerLib.shared().customData = customDataMap
+            }
+        }
+    }
     
     func applicationDidBecomeActive(_ application: UIApplication) {
-        // Start the SDK (start the IDFA timeout set above, for iOS 14 or later)
+         //Start the SDK (start the IDFA timeout set above, for iOS 14 or later)
         AppsFlyerLib.shared().start()
         print("XXXXXXXXXXX AF 2 XXXXXXXXXX")
     }
+
     // Open Univerasal Links
     // For Swift version < 4.2 replace function signature with the commented out code:
     // func application(_ application: UIApplication, continue userActivity: NSUserActivity, restorationHandler: @escaping ([Any]?) -> Void) -> Bool {
